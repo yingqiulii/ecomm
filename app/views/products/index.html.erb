@@ -23,7 +23,7 @@
     <div class="products-grid">
       <% @products.each do |product| %>
         <div class="product-item">
-          <h3 class="product-name"><%= product.name %></h3>
+          <h3 class="product-name"><%= link_to product.name, product_path(product) %></h3>
           <p class="product-description"><%= product.description %></p>
           <!-- 其他产品信息，如价格、类别等 -->
         </div>
