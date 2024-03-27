@@ -17,5 +17,7 @@ class HomeController < ApplicationController
     # Fetches all products. Consider applying limits or pagination if there are many products.
     @products = Product.all
 
+      @products = Product.page(params[:page]).per(5)
+
   end
 end
