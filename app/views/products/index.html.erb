@@ -1,0 +1,37 @@
+<%# app/views/products/index.html.erb %>
+
+<div class="container mx-auto px-4">
+  <h1 class="text-2xl font-bold my-4">Search Results</h1>
+
+  <%= form_with(url: products_path, method: :get, local: true, class: "search-form mb-6") do |form| %>
+    <div>
+      <%= form.label :keyword, "Search Keyword" %>
+      <%= form.text_field :keyword, value: params[:keyword], class: "input-text" %>
+    </div>
+
+    <div>
+      <%= form.label :category_id, "Select Category" %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, include_blank: true, selected: params[:category_id], class: "select-category" %>
+    </div>
+
+    <div>
+      <%= form.submit "Search", class: "btn-search" %>
+    </div>
+  <% end %>
+
+  <% if @products.any? %>
+    <div class="products-grid">
+      <% @products.each do |product| %>
+        <div class="product-item">
+          <h3 class="product-name"><%= product.name %></h3>
+          <p class="product-description"><%= product.description %></p>
+          <!-- 其他产品信息，如价格、类别等 -->
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No products found.</p>
+  <% end %>
+</div>
+<%= paginate @products %>
+

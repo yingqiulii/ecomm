@@ -1,0 +1,38 @@
+<div class="bg-gray-800 text-white text-center py-20">
+  <h1 class="text-5xl font-bold mb-4">Welcome</h1>
+  <p class="text-xl mb-8">Your one-stop shop for all your e-commerce needs!</p>
+  <%= link_to "Shop Now", root_path, class: "bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" %>
+</div>
+
+<div class="flex flex-wrap justify-center mt-8 items-center gap-10">
+  <% @main_categories.each do |category| %>
+    <%= link_to category_path(category) do %>
+      <div class="flex flex-col mb-4">
+        <h2 class="text-gray-800 font-medium text-lg text-center mb-6"><%= category.name %></h2>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<%= form_with(url: products_path, method: :get, local: true) do |form| %>
+  <div>
+    <%= form.label :keyword, "Search Keyword" %>
+    <%= form.text_field :keyword %>
+  </div>
+
+  <div>
+    <%= form.label :category_id, "Select Category" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, include_blank: true %>
+  </div>
+
+  <div>
+    <%= form.submit "Search" %>
+  </div>
+<% end %>
+<% @products.each do |product| %>
+  <div>
+    <h3><%= product.name %></h3>
+    <p><%= product.description %></p>
+  </div>
+<% end %>
+
