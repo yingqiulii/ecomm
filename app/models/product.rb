@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   end
   belongs_to :category
   has_one_attached :image
+  has_many :cart_items
+  has_many :carts, through: :cart_items
 
   def self.ransackable_associations(auth_object = nil)
     ['category']

@@ -48,5 +48,9 @@
 
 
     <!-- Add to Cart Button -->
-    <button data-action="click->products#addToCart" class="inline-flex items-center justify-center px-5 py-3 border border-transparent font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Add To Cart</button>
+   <%= form_with(url: cart_add_path) do |f| %>
+   <%= f.hidden_field :id, value: @product.id %>
+   <%= f.number_field :quantity,value:0,min:1 %>
+   <%= f.submit "Add to cart" %>
+   <%end%>
 </div>
