@@ -1,2 +1,5 @@
-<h1>Cart#show</h1>
-<p>Find me in app/views/cart/show.html.erb</p>
+<h1>Your Cart</h1>
+<% @cart.cart_items.each do |cart_item| %>
+  <p><%= cart_item.product.name %> * <%= cart_item.quantity %> = $<%= cart_item.product.price * cart_item.quantity %></p>
+<% end %>
+<p>Your total is $<%= @cart.total %></p>

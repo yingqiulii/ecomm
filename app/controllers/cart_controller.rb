@@ -20,17 +20,28 @@ class CartController < ApplicationController
       current_cart_item.destroy
     else
       @cart.cart_items.create(product: @product, quantity: quantity)
-
+    end
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [turbo_stream.replace('cart',
+                                                   partial: 'cart/cart',
+                                                   locals: { cart: @cart }),
+                              ]
+      end
     end
   end
 
-  # def remove
-  #   CartItem.find_by(id: params[:id].destroy)
-  # end
+
   def remove
     cart_item = CartItem.find_by(id: params[:id])
     cart_item.destroy if cart_item.present?
-    redirect_to cart_path, notice: 'Product removed from cart successfully.'
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('cart',
+                                                  partial: 'cart/cart_item',
+                                                  locals: { cart: @cart })
+      end
+    end
   end
 
 end
