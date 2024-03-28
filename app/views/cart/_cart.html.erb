@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "cart" do %>
-  <h1>Cart</h1>
+<h1>Cart</h1>
   <% if @cart.cart_items.count > 0 %> <!-- 注意这里是 `cart_items` 而不是 `cart_item` -->
     <%= render "cart/cart_item"%> <!-- 假设你的局部视图在 `cart_items/_cart_item.html.erb` -->
     <p>Total: <%= @cart.total %></p> <!-- 确保`@cart.total`方法存在且能正确计算总价 -->

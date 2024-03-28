@@ -1,11 +1,22 @@
-<h1>Your Cart</h1>
-<% @cart.cart_items.each do |cart_item| %>
-  <p><%= cart_item.product.name %> * <%= cart_item.quantity %> = $<%= cart_item.product.price * cart_item.quantity %></p>
+<!-- app/views/checkouts/show.html.erb -->
+
+<h1>结账</h1>
+
+<% if flash[:alert] %>
+  <p><%= flash[:alert] %></p>
 <% end %>
-<p>Your total is $<%= @cart.total %></p>
+
+<div class="cart-summary">
+  <% @cart.cart_items.each do |item| %>
+    <div class="item">
+      <p><%= item.product.name %>: <%= item.quantity %> x $<%= item.product.price %></p>
+    </div>
+  <% end %>
+</div>
+
+<p>总计: $<%= @cart.total %></p> <!-- 请确保@cart对象有一个计算总价的方法 -->
 
 <h2>地址信息</h2>
-
 <%= form_with model: @customer, url: checkout_path, local: true do |form| %>
   <%= form.label :name, "姓名" %>
   <%= form.text_field :name %>
