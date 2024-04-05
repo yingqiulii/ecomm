@@ -79,13 +79,10 @@ class CheckoutsController < ApplicationController
     address = params[:address]
     name = params[:name]
 
-    # 创建或更新顾客信息
     customer = Customer.find_or_create_by(name: name, address: address, province: province)
 
-    # 假设有一个方法来创建订单，这个方法内部会触发模型的 before_save 回调来计算总价和税费
     order = create_order(customer)
 
-    # 响应，可能是重定向到订单确认页面或显示订单详情
     redirect_to order_path(order)
   end
 
@@ -97,7 +94,7 @@ class CheckoutsController < ApplicationController
       order.order_items.create(
         product: item.product,
         quantity: item.quantity,
-        price: item.product.price # 确保这里正确设置了价格
+        price: item.product.price
       )
     end
     order

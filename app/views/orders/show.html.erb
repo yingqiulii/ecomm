@@ -8,11 +8,9 @@
 
 <h2>Items</h2>
 <% @order.order_items.each do |item| %>
-  <!-- 假设每个item对象都有price方法 -->
   <p><%= item.product.name %> x <%= item.quantity %> = $<%= item.price * item.quantity %></p>
 <% end %>
 
-<p>Subtotal: $<%= @order.total %></p>
 <p>Taxes:</p>
 <ul>
   <% if @taxes %>
@@ -24,5 +22,9 @@
   <% end %>
 </ul>
 
-<!-- 确保@taxes不是nil再调用values.sum -->
 <p>Total Price: $<%= '%.2f' % (@order.total + (@taxes ? @taxes.values.sum : 0)) %></p>
+<h1>Order Details</h1>
+<!-- 其他订单详情的代码 -->
+
+<p>Total Taxes: $<%= '%.2f' % @order.tax %></p>
+<p>Total Price (including taxes): $<%= '%.2f' % (@order.total + @order.tax) %></p>

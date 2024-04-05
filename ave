@@ -1,0 +1,9 @@
+ => 
+[32m#<OrderItem:0x0000556b9f0251d8[0m
+ id: [36m[1mnil[0m,
+ order_id: [36m[1mnil[0m,
+ product_id: [34m[1m11[0m,
+ quantity: [34m[1m2[0m,
+ price: [35m[1m0.2889e2[0m,
+ created_at: [36m[1mnil[0m,
+ updated_at: [36m[1mnil[0m[32m>[0m 
