@@ -8,8 +8,7 @@ class OrdersController < ApplicationController
 
   def calculate_taxes(order)
     province = order.customer.province
-    total = order.total
-
+    total =order.tax
     {name:province,amount:total}
   end
 end
