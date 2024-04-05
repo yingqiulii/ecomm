@@ -27,6 +27,6 @@ class CheckoutsController < ApplicationController
 
   def create_order(customer, total)
     # 实际创建订单逻辑
-    Order.create(customer_id: customer.id, total_price: total, date: Date.today)
+    Order.create(customer_id: customer.id, total: total, date: Date.today)
   end
 end
