@@ -2,24 +2,4 @@
 <% @cart.cart_items.each do |cart_item| %>
   <p><%= cart_item.product.name %> * <%= cart_item.quantity %> = $<%= cart_item.product.price * cart_item.quantity %></p>
 <% end %>
-<p>Your total is $<%= @cart.total %></p>
-
-<h2>地址信息</h2>
-
-<%= form_with model: @customer, url: checkout_path, local: true do |form| %>
-  <%= form.label :name, "姓名" %>
-  <%= form.text_field :name %>
-
-  <%= form.label :address, "地址" %>
-  <%= form.text_field :address %>
-
-  <%= form.label :province, "省份" %>
-  <%= form.text_field :province %>
-
-  <%= form.label :email, "电子邮件" %>
-  <%= form.email_field :email %>
-
-  <div class="actions">
-    <%= form.submit "提交订单" %>
-  </div>
-<% end %>
+<p>Your total isss $<%= @cart.total %></p>

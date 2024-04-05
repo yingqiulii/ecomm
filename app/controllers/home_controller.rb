@@ -12,7 +12,7 @@
 class HomeController < ApplicationController
   def index
     # Fetches the first 4 categories. You might adjust this based on your needs.
-    @main_categories = Category.limit(4)
+    @main_categories = Category.limit(10)
 
     # Fetches all products. Consider applying limits or pagination if there are many products.
     @products = Product.all
