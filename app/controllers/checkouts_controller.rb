@@ -94,11 +94,10 @@ class CheckoutsController < ApplicationController
   def create_order(customer)
     order = Order.create(customer: customer)
     @cart.cart_items.each do |item|
-      # 确保在创建OrderItem时包括单价
       order.order_items.create(
         product: item.product,
         quantity: item.quantity,
-        price: item.product.price # 假设item.product.price是单价
+        price: item.product.price # 确保这里正确设置了价格
       )
     end
     order
