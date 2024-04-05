@@ -1,71 +1,32 @@
 class CheckoutsController < ApplicationController
-  before_action :set_cart
+  def confirm
+    # 假设有一个方法来处理购物车总价和税费的计算
+    province = params[:province]
+    address = params[:address]
+    name = params[:name]
 
-  def show
-    @customer = Customer.new
-    @order = Order.new
-    @cart = current_cart
-  end
+    # 计算总价和税费
+    total, tax = calculate_total_and_tax(province)
 
-  def create
-    ActiveRecord::Base.transaction do
-      @customer = Customer.find_or_initialize_by(email: customer_params[:email])
-      @customer.assign_attributes(customer_params)
-      @customer.save!
+    # 创建或更新顾客信息
+    customer = Customer.find_or_create_by(name: name, address: address, province: province)
 
-      @order = @customer.orders.create!(order_params.merge(total: calculate_total(@cart, @customer.province)))
+    # 创建订单
+    order = create_order(customer, total)
 
-      @cart.cart_items.each do |item|
-        @order.order_items.create!(product: item.product, quantity: item.quantity, price: item.product.price)
-      end
-
-      session[:cart_id] = nil # 清空当前购物车
-    end
-
-    redirect_to root_path, notice: 'Order has been placed successfully.'
-  rescue => e
-    flash.now[:alert] = e.message
-    render :show
+    # 响应，可能是重定向到订单确认页面或显示订单详情
+    redirect_to order_path(order)
   end
 
   private
 
-  def set_cart
-    @cart = current_cart
+  def calculate_total_and_tax(province)
+    # 实际计算逻辑
+    [100, 10] # 示例返回值
   end
 
-  def customer_params
-    params.require(:customer).permit(:name, :email, :address, :province)
-  end
-
-  def order_params
-    params.require(:order).permit(:payment_method)
-  end
-
-  def calculate_total(cart, province)
-    subtotal = cart.cart_items.sum { |item| item.quantity * item.product.price }
-    tax_rate = tax_rate_for_province(province)
-    subtotal * (1 + tax_rate)
-  end
-
-  def tax_rate_for_province(province)
-    # 根据省份返回相应的税率
-    case province
-    when 'Ontario'
-      0.13 # HST
-    when 'British Columbia'
-      0.12 # GST + PST
-    # 添加其他省份和税率
-    else
-      0.05 # 默认GST
-    end
-  end
-
-  def current_cart
-    Cart.find(session[:cart_id])
-  rescue ActiveRecord::RecordNotFound
-    cart = Cart.create
-    session[:cart_id] = cart.id
-    cart
+  def create_order(customer, total)
+    # 实际创建订单逻辑
+    Order.create(customer_id: customer.id, total_price: total, date: Date.today)
   end
 end

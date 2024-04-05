@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 resources :categories,only: [:show]
 resources :products, only: [:show, :index]
 resource :checkout, only: [:show, :create]
+post 'confirm_checkout', to: 'checkouts#confirm'
+resources :orders, only: [:show]
 
 
 end
