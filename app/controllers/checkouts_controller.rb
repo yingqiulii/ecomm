@@ -22,8 +22,6 @@ class CheckoutsController < ApplicationController
     order.save
     order
   end
-
-
 end
 
 

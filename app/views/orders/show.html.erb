@@ -10,13 +10,29 @@
 <% @order.order_items.each do |item| %>
   <p><%= item.product.name %> x <%= item.quantity %> = $<%= item.price * item.quantity %></p>
 <% end %>
-
 <p>Taxes:</p>
 <ul>
-  <% if @taxes %>
-      <li><%= @taxes[:name].upcase %>: $<%= '%.2f' % @taxes[:amount] %></li>
+  <% if @taxes[:total_tax] && @taxes[:total_tax] > 0 %>
+    <% if @taxes[:gst] && @taxes[:gst] > 0 %>
+      <li>GST: $<%= '%.2f' % @taxes[:gst] %></li>
+    <% end %>
+    <% if @taxes[:pst] && @taxes[:pst] > 0 %>
+      <li>PST: $<%= '%.2f' % @taxes[:pst] %></li>
+    <% end %>
+    <% if @taxes[:hst] && @taxes[:hst] > 0 %>
+      <li>HST: $<%= '%.2f' % @taxes[:hst] %></li>
+    <% end %>
+    <li>Total Tax: $<%= '%.2f' % @taxes[:total_tax] %></li>
+    <!-- 新增的展示总价格（含税）的列表项 -->
+    <li>Total Price (Including Taxes): $<%= '%.2f' % @order.total %></li>
   <% else %>
-    <li>No taxes applied</li>
+    <li>No taxes applied.</li>
+    <!-- 如果没有税，则总价格等于不含税的总额 -->
+    <li>Total Price: $<%= '%.2f' % @order.total %></li>
   <% end %>
 </ul>
+
+
+
+
 
