@@ -1,18 +1,49 @@
-ActiveAdmin.register Customer do
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :name, :email, :address, :city, :province, :postal_code, :phone
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:name, :email, :address, :city, :province, :postal_code, :phone]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
+
+  ActiveAdmin.register Customer do
+    # 定义在列表视图中显示的列
+    index do
+      selectable_column
+      id_column
+      column :name
+      column :address
+      column :province
+      column :email
+      actions
+    end
+
+    # 过滤器
+    filter :name
+    filter :email
+    filter :province
+
+    # 定义表单的外观
+    form do |f|
+      f.inputs 'Customer Details' do
+        f.input :name
+        f.input :address
+        f.input :province
+        f.input :email
+      end
+      f.actions
+    end
+
+    # 定义显示页面的外观
+    show do
+      attributes_table do
+        row :name
+        row :address
+        row :province
+        row :email
+        row :created_at
+        row :updated_at
+      end
+      active_admin_comments
+    end
+
+    # 控制允许的参数
+    permit_params :name, :address, :province, :email
+  end
+
+
 end
