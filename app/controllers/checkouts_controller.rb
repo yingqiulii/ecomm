@@ -80,9 +80,9 @@ class CheckoutsController < ApplicationController
     name = params[:name]
 
     customer = Customer.find_or_create_by(name: name, address: address, province: province)
-
+    logger.warn("Loaded all users")
     order = create_order(customer)
-
+    logger.warn(order)
     redirect_to order_path(order)
   end
 
@@ -90,13 +90,21 @@ class CheckoutsController < ApplicationController
 
   def create_order(customer)
     order = Order.create(customer: customer)
+    total=0
     @cart.cart_items.each do |item|
       order.order_items.create(
         product: item.product,
         quantity: item.quantity,
         price: item.product.price
       )
+    total+=item.quantity * item.product.price
+    logger.warn(item.product)
+    logger.warn(item.quantity)
+    logger.warn(item.product.price)
+
+
     end
+    order[:total]=total
     order
   end
 

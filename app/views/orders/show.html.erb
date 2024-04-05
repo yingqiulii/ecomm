@@ -14,12 +14,9 @@
 <p>Taxes:</p>
 <ul>
   <% if @taxes %>
-    <% @taxes.each do |name, amount| %>
-      <li><%= name.upcase %>: $<%= '%.2f' % amount %></li>
-    <% end %>
+      <li><%= @taxes[:name].upcase %>: $<%= '%.2f' % @taxes[:amount] %></li>
   <% else %>
     <li>No taxes applied</li>
   <% end %>
 </ul>
 
-<p>Total Price: $<%= '%.2f' % (@order.total + (@taxes ? @taxes.values.sum : 0)) %></p>
