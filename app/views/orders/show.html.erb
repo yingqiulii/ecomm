@@ -23,8 +23,3 @@
 </ul>
 
 <p>Total Price: $<%= '%.2f' % (@order.total + (@taxes ? @taxes.values.sum : 0)) %></p>
-<h1>Order Details</h1>
-<!-- 其他订单详情的代码 -->
-
-<p>Total Taxes: $<%= '%.2f' % @order.tax %></p>
-<p>Total Price (including taxes): $<%= '%.2f' % (@order.total + @order.tax) %></p>
