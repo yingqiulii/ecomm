@@ -8,15 +8,14 @@ class Order < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "customer_id", "id", "tax", "total", "updated_at"]
   end
-  
-  before_save :calculate_total_and_tax
 
+  before_save :calculate_total_and_tax
 
   private
 
   def calculate_total_and_tax
     self.total = order_items.sum { |item| item.price * item.quantity }
-    tax_rate = tax_rate_for_province # 确保这里是你的税率获取方法
+    tax_rate = tax_rate_for_province
     self.tax = self.total * tax_rate
   end
 

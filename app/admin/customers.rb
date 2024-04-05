@@ -1,6 +1,4 @@
-
-
-  ActiveAdmin.register Customer do
+ ActiveAdmin.register Customer do
     # 定义在列表视图中显示的列
     index do
       selectable_column
@@ -46,4 +44,3 @@
   end
 
 
-end
