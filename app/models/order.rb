@@ -34,7 +34,12 @@
 class Order < ApplicationRecord
   belongs_to :customer
   has_many :order_items, dependent: :destroy
-
+    def self.ransackable_associations(auth_object = nil)
+    ["customer", "order_items"]
+  end
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "customer_id", "id", "tax", "total", "updated_at"]
+  end
   before_save :calculate_total_and_tax
 
 
