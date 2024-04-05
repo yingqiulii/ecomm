@@ -3,3 +3,29 @@
   <p><%= cart_item.product.name %> * <%= cart_item.quantity %> = $<%= cart_item.product.price * cart_item.quantity %></p>
 <% end %>
 <p>Your total isss $<%= @cart.total %></p>
+<h2>Shipping Address</h2>
+<%= form_with url: confirm_checkout_path, method: :post do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :address, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :province %>
+    <%= form.select :province, [
+      ['Alberta', 'AB'],
+      ['British Columbia', 'BC'],
+      ['Manitoba', 'MB'],
+      # 添加其他省份
+    ], { prompt: 'Select Province' }, required: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Submit" %>
+  </div>
+<% end %>
