@@ -7,6 +7,7 @@
       column :address
       column :province
       column :email
+      column :encrypted_password
       actions
     end
 
@@ -22,6 +23,7 @@
         f.input :address
         f.input :province
         f.input :email
+        f.input :encrypted_password
       end
       f.actions
     end
@@ -33,6 +35,7 @@
         row :address
         row :province
         row :email
+        row :encrypted_password
         row :created_at
         row :updated_at
       end
@@ -40,7 +43,7 @@
     end
 
     # 控制允许的参数
-    permit_params :name, :address, :province, :email
+    permit_params :name, :address, :province, :email , :encrypted_password
   end
 
 

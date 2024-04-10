@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :customers,controllers:{
+    sessions: 'customers/sessions'
+  }
   get 'cart',to: 'cart#show'
   post 'cart/add'
   post 'cart/remove'
@@ -15,7 +18,7 @@ resources :products, only: [:show, :index]
 resource :checkout, only: [:show, :create]
 post 'confirm_checkout', to: 'checkouts#confirm'
 resources :orders, only: [:show]
-devise_for :customers
-resources :customers
+
+
 
 end
