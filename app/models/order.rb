@@ -33,6 +33,7 @@
 
 class Order < ApplicationRecord
   belongs_to :customer
+  before_save :update_province_and_address
   has_many :order_items, dependent: :destroy
     def self.ransackable_associations(auth_object = nil)
     ["customer", "order_items"]
@@ -92,5 +93,12 @@ class Order < ApplicationRecord
   'YT' => { gst: 0.05, pst: 0.0, hst: 0.0 },   # 育空地区
     }
     tax_rates[customer.province] || { gst: 0.0, pst: 0.0, hst: 0.0 }
+  end
+
+  private
+
+  def update_province_and_address
+    self.province = customer.province if customer.present?
+    self.address = customer.address if customer.present?
   end
 end

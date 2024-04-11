@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :customers,controllers:{
+  devise_for :customers,controllers: {
     sessions: 'customers/sessions'
   }
   get 'cart',to: 'cart#show'

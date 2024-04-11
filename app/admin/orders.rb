@@ -5,6 +5,8 @@
       column :customer
       column :total
       column :tax
+      column :province
+      column :address
       column :created_at
       actions
     end
@@ -18,6 +20,8 @@
         f.input :customer
         f.input :total
         f.input :tax
+        f.input :address
+        f.input :province
       end
       f.actions
     end
@@ -27,6 +31,8 @@
         row :customer
         row :total
         row :tax
+        row :address
+        row :province
       end
       active_admin_comments
     end
