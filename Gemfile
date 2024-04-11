@@ -74,5 +74,9 @@ gem 'image_processing', '~> 1.2'
 gem 'faker'
 gem "font-awesome-sass", "~> 6.5.1"
 gem 'kaminari'
+gem 'stripe', '~> 10.0'
 
 
+
+
+gem "pay", "~> 7.1"

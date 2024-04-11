@@ -19,6 +19,7 @@ resource :checkout, only: [:show, :create]
 post 'confirm_checkout', to: 'checkouts#confirm'
 resources :orders, only: [:show]
 
-
+get'checkout/success',to:'checkouts#success'
+get'billing',to:'billing#show'
 
 end
