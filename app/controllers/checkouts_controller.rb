@@ -72,31 +72,42 @@
 
 class CheckoutsController < ApplicationController
   before_action :authenticate_customer!, only: [:confirm], unless: -> { request.format.js? }
-
-  def show
-    current_customer.set_payment_processor :stripe
-    current_customer.payment_processor.customer
-    cart = current_customer.cart
-    line_items = cart.cart_items.map do |item|
-      {
-        name: item.product.name,
-        amount: (item.product.price * 100).to_i, # Stripe 期望的金额单位是分
-        currency: 'usd',
-        quantity: item.quantity,
-      }
-    end
-
-      @checkout_session = current_customer.payment_processor.checkout(
-        mode: 'payment',
-        success_url: checkout_success_url,
-        line_items: line_items,
-      )
+def show
+current_customer.set_payment_processor :stripe
+current_customer.payment_processor.customer
+@order = Order.find_by(id: params[:id])
+  if @order.nil?
+    redirect_to root_path
+    return
   end
+  line_items = @order.order_items.map do |item|
+    {
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: item.product.name,
+          description: item.product.description
+        },
+        unit_amount: (item.price * 100).to_i
+      },
+      quantity: item.quantity
+    }
+  end
+
+
+  # 创建Stripe checkout会话
+  @checkout_session = current_customer.payment_processor.checkout(
+    mode: 'payment',
+    success_url: checkout_success_url,
+    line_items: line_items
+  )
+end
+
 
   def success
 
   end
-
+ 
   def confirm
     # 创建或更新顾客信息
     customer = update_or_create_customer

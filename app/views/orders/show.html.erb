@@ -31,7 +31,10 @@
     <li>Total Price: $<%= '%.2f' % @order.total %></li>
   <% end %>
 </ul>
-<%= link_to "Buy now",checkout_path%>
+<%= link_to 'Buy now', checkout_path(id: @order.id) %>
+
+
+
 
 
 

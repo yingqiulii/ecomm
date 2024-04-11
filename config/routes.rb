@@ -18,6 +18,7 @@ resources :products, only: [:show, :index]
 resource :checkout, only: [:show, :create]
 post 'confirm_checkout', to: 'checkouts#confirm'
 resources :orders, only: [:show]
+get 'checkouts/:id', to: 'checkouts#show'
 
 get'checkout/success',to:'checkouts#success'
 get'billing',to:'billing#show'

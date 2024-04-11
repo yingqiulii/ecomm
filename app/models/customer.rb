@@ -1,6 +1,4 @@
 class Customer < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :orders
@@ -8,6 +6,8 @@ class Customer < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["address", "city", "created_at", "email", "id", "id_value", "name", "phone", "postal_code", "province", "updated_at"]
   end
+
+
   pay_customer stripe_attributes: :stripe_attributes
 
 def stripe_attributes(pay_customer)
