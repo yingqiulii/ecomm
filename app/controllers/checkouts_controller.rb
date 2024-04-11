@@ -22,6 +22,32 @@ class CheckoutsController < ApplicationController
     order.save
     order
   end
+
+  def confirm
+    @order = Order.new(order_params)
+    # 如果用户已登录，关联当前用户
+    @order.customer_id = current_customer.id if customer_signed_in?
+
+    if @order.save
+      # 处理订单成功的情况
+      redirect_to order_path, notice: "Order was successfully created."
+    else
+      # 处理保存失败的情况，如重新渲染表单
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  # 使用强参数确保安全，这里假设订单有一些基本属性
+  def order_params
+    params.require(:order).permit(:total, :tax, :province, :address)
+  end
+
+  # 如果你使用Devise并且你的用户模型是Customer
+  def customer_signed_in?
+    !current_customer.nil?
+  end
 end
 
 
