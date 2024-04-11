@@ -26,16 +26,30 @@
 
 
 class CheckoutsController < ApplicationController
+  # def confirm
+  #   # 根据情况创建或找到顾客
+  #   if customer_signed_in?
+  #     customer = current_customer
+  #   else
+  #     name = params[:name]
+  #     address = params[:address]
+  #     province = params[:province]
+  #     customer = Customer.find_or_create_by(name: name, address: address, province: province)
+  #   end
+
+  #   # 创建订单
+  #   order = create_order(customer)
+
+  #   # 根据创建结果重定向或渲染视图
+  #   if order.persisted?
+  #     redirect_to order_path(order), notice: "Order was successfully created."
+  #   else
+  #     render :new, status: :unprocessable_entity
+  #   end
+  # end
   def confirm
-    # 根据情况创建或找到顾客
-    if customer_signed_in?
-      customer = current_customer
-    else
-      name = params[:name]
-      address = params[:address]
-      province = params[:province]
-      customer = Customer.find_or_create_by(name: name, address: address, province: province)
-    end
+    # 使用表单提交的信息更新当前用户的信息，或者为未登录的用户创建新的Customer记录
+    customer = update_or_create_customer
 
     # 创建订单
     order = create_order(customer)
@@ -45,6 +59,17 @@ class CheckoutsController < ApplicationController
       redirect_to order_path(order), notice: "Order was successfully created."
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def update_or_create_customer
+    if customer_signed_in?
+      current_customer.update(customer_params)
+      current_customer
+    else
+      Customer.create(customer_params)
     end
   end
 
@@ -62,10 +87,6 @@ class CheckoutsController < ApplicationController
     order.save
     order
   end
-
-  # 实现计算总额和税额的方法...
-
-  # 使用强参数...
 
   def customer_signed_in?
     !current_customer.nil?
